@@ -45,10 +45,15 @@ class Tex2loc:
         return self.city, self.country, self.continent
 
     def get_coordinates(self):
-        if self.city == "Unknown" or self.country == "Unknown":
-            return None, None
+        search_query = ""
+        if(self.city != "") :
+            search_query = f"{self.city}, {self.country}"
+        elif(self.country != "") :
+            search_query = f"{self.country}"
+        else :
+            search_query = f"{self.continent}"
 
-        location = self.geolocator.geocode(f"{self.city}, {self.country}")
+        location = self.geolocator.geocode(search_query)
         if location:
             return location.latitude, location.longitude
         else:
