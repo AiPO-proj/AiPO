@@ -6,8 +6,8 @@ import re
 class Tex2loc:
     def __init__(self, model_name="microsoft/Phi-3-mini-4k-instruct", device="cuda"):
         self.device = device
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", trust_remote_code=True)
         self.pipe = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device_map="auto")
         self.geolocator = Nominatim(user_agent="tex2loc")
 
