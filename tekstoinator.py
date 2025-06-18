@@ -1,15 +1,11 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # # Tekstoinator
 # 
 # Robimy rzeczy nie dlatego, że są proste tylko dlatego, że są na zaliczenie!
 
-# In[1]:
-
-
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+import easyocr
 
 DETECTION_SIZE = (640, 640)
 
@@ -75,11 +71,8 @@ def find_green(image):
     green_lower = np.array([0, 60, 25])
     green_upper = np.array([50, 255, 120])
 
-
     small_kernel = np.ones((5,5),np.uint8)
     big_kernel = np.ones((26,26),np.uint8)
-
-    
 
     example_frame_masked = cv2.inRange(image, green_lower, green_upper)
     example_frame_masked = cv2.morphologyEx(example_frame_masked, cv2.MORPH_OPEN, small_kernel)
@@ -108,28 +101,18 @@ def find_green(image):
     
     return returned_images
 
-
-# In[3]:
-
-
-import easyocr
-
-reader = easyocr.Reader(['en', 'pl', 'es'])
-
-
-import cv2
-import matplotlib.pyplot as plt
-
-
 def extract_text_from_video(video_path, frame_interval=25):
+    reader = easyocr.Reader(['en', 'pl', 'es'])
+
     cap = cv2.VideoCapture(video_path)
     k = 0
     found_text = []
+
     while True:
         ret, frame = cap.read()
         if not ret:
             break
-        k += 1
+        
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         if k % frame_interval == 0:
@@ -143,12 +126,13 @@ def extract_text_from_video(video_path, frame_interval=25):
 
             for region in example_frames_annotated:
                 found_text += reader.readtext(region)
+        k += 1
 
     cap.release()
 
     filtered_text = []
     for text in found_text:
-        if text[2] > 0.6 and len(text[1]) > 3:
+        if text[2] > 0.4 and len(text[1]) > 3:
             filtered_text.append(text[1].upper())
 
     return list(set(filtered_text))
