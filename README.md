@@ -14,3 +14,10 @@ https://opencv.org/blog/text-detection-and-removal-using-opencv/
 
 ## Dokumentacja
 Znajduje się w pliku dokumentacja.pdf w katalogu głównym projektu
+
+## Dataset
+Utworzony dataset na podstawie API Mapillary dostępny jest do pobrania pod adresem 
+https://drive.google.com/drive/folders/1hImYeu8Jq2E1LjVrIR18-366reT_idfo?usp=sharing
+
+## Example
+W notebooku notebook_version.ipynb zaprezentowane zostały wyniki aplikacji dla wspomnianego wcześniej filmiku Lublin

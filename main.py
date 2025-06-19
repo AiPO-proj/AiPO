@@ -90,7 +90,7 @@ def main():
     le.fit(countries)
 
     model_path = "best_model.pt"
-    model = load_classifier_model(model_path, device, num_classes=len(le.classes_))
+    model = load_classifier_model(model_path, device, num_classes=158)
     print("Model załadowany.")
 
     print("4. Predykcje na klatkach video...")
